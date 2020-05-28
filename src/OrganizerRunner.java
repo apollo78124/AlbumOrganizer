@@ -10,8 +10,7 @@ public class OrganizerRunner {
 	}
 	
 	public static void main(String[] argss) {
-		OrganizerRunner runner = new OrganizerRunner();
-		String[] args = {"1", "3", "Album 1", "Album 3", "Album 2"};
+		String[] args = {"1", "3", "Album 1", "Album 3", "Album 2", "Album 1", "Album 2", "Album 3",};
 		int numberOfStacks = 0;
 		int numberOfAlbumsInCurrentStack = 0;
 		ArrayList<Album> stack = new ArrayList<Album>();
@@ -23,39 +22,47 @@ public class OrganizerRunner {
 		for (int i = 0; i < numberOfStacks; i++) {
 			int start = j;
 			numberOfAlbumsInCurrentStack = Integer.parseInt(args[start]);
-			while (j < start+numberOfAlbumsInCurrentStack-1) {
+			j++;
+			while (j < start+numberOfAlbumsInCurrentStack+1) {
 				stack.add(new Album(args[j]));	
 				j++;
 			}
-			while (j < start+2*numberOfAlbumsInCurrentStack-1) {
+			while (j < 1+start+2*numberOfAlbumsInCurrentStack) {
 				organizedStack.add(new Album(args[j]));
 				j++;
 			}
 			int position = 0;
 			for (Album album : organizedStack) {
-				for (Album album2 : stack) 
+				for (Album album2 : stack)  {
 					if (album.name == album2.name)
 						album2.label = position;
+				}
 				position++;
 			}
 			boolean notSorted = true;
 			while (notSorted) {
 				int min = 0;
+				if(stack.get(0).label == 0)
+					min = 1;
 				for (int z = 1; z<numberOfAlbumsInCurrentStack; z++) {
-					if (stack.get(z).label < stack.get(min).label)
-							min = z;
-							sendToTop(stack, min);
-							output.add(stack.get(z));
+					if (stack.get(z).label < stack.get(min).label) {
+						min = z;
+					}	
 						if (stack.get(z).label == z) {
 							notSorted = false;
 						} else {
 							notSorted = true;
 						}
 				}
-								
+				if (notSorted) {
+					sendToTop(stack, min);
+					output.add(stack.get(min));	
+				}	
 			}
 			
 		}
-		System.out.println(output);
+		for (Album album : output) {
+			System.out.println(album.name);
+		}
 	}
 }
