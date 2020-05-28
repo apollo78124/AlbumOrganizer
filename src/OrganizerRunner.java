@@ -3,14 +3,14 @@ import java.util.ArrayList;
 public class OrganizerRunner {
 	public static void sendToTop(ArrayList<Album> albumList, int position) {
 		
-		Album temp = albumList.get(0);
-		albumList.set(0, albumList.get(position));
-		albumList.set(position, temp);
+		Album temp = albumList.get(position);
+		albumList.remove(position);
+		albumList.add(0, temp);
 		
 	}
 	
 	public static void main(String[] argss) {
-		String[] args = {"1", "3", "Album 1", "Album 3", "Album 2", "Album 1", "Album 2", "Album 3",};
+		String[] args = {"1", "3", "Blues for Allah", "Skeletons from the Closet", "Terrapin Station", "Skeletons from the Closet", "Blues for Allah", "Terrapin Station"};
 		int numberOfStacks = 0;
 		int numberOfAlbumsInCurrentStack = 0;
 		ArrayList<Album> stack = new ArrayList<Album>();
@@ -39,9 +39,10 @@ public class OrganizerRunner {
 				}
 				position++;
 			}
-			boolean notSorted = true;
-			while (notSorted) {
+			boolean sorted = false;
+			while (!sorted) {
 				int min = 0;
+				int sameAsLabel = 0;
 				if(stack.get(0).label == 0)
 					min = 1;
 				for (int z = 1; z<numberOfAlbumsInCurrentStack; z++) {
@@ -49,20 +50,21 @@ public class OrganizerRunner {
 						min = z;
 					}	
 						if (stack.get(z).label == z) {
-							notSorted = false;
-						} else {
-							notSorted = true;
+							sameAsLabel++;
 						}
 				}
-				if (notSorted) {
+				if (sameAsLabel == numberOfAlbumsInCurrentStack-1)
+					sorted = true;
+				if (!sorted) {
+					output.add(stack.get(min));
 					sendToTop(stack, min);
-					output.add(stack.get(min));	
 				}	
 			}
-			
+			for (Album album : output) {
+				System.out.println(album.name);
+			}
+			System.out.println("\n");
 		}
-		for (Album album : output) {
-			System.out.println(album.name);
-		}
+		
 	}
 }
