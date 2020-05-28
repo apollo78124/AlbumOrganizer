@@ -8,17 +8,10 @@ public class OrganizerRunner {
 		albumList.set(position, temp);
 		
 	}
-	public class Album {
-		int label;
-		String name;
-		public Album (String name) {
-			this.name = name;
-		}
-	}
 	
-	public static void main(String[] args) {
-		//OrganizerRunner runner = new OrganizerRunner();
-		//String[] args = {"1", "3", "Album 1", "Album 3", "Album 2"};
+	public static void main(String[] argss) {
+		OrganizerRunner runner = new OrganizerRunner();
+		String[] args = {"1", "3", "Album 1", "Album 3", "Album 2"};
 		int numberOfStacks = 0;
 		int numberOfAlbumsInCurrentStack = 0;
 		ArrayList<Album> stack = new ArrayList<Album>();
@@ -30,11 +23,11 @@ public class OrganizerRunner {
 		for (int i = 0; i < numberOfStacks; i++) {
 			int start = j;
 			numberOfAlbumsInCurrentStack = Integer.parseInt(args[start]);
-			while (j < start+numberOfAlbumsInCurrentStack) {
+			while (j < start+numberOfAlbumsInCurrentStack-1) {
 				stack.add(new Album(args[j]));	
 				j++;
 			}
-			while (j < start+2*numberOfAlbumsInCurrentStack) {
+			while (j < start+2*numberOfAlbumsInCurrentStack-1) {
 				organizedStack.add(new Album(args[j]));
 				j++;
 			}
@@ -63,5 +56,6 @@ public class OrganizerRunner {
 			}
 			
 		}
+		System.out.println(output);
 	}
 }
